@@ -4,6 +4,7 @@ class Artifact extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        this.icon = texture;
         this.type = type;
         this.pickedUp = false;
         this.inRange = false;
@@ -21,7 +22,7 @@ class Artifact extends Phaser.Physics.Arcade.Sprite {
         if (this.inRange) {
             this.setTexture('tempArtLight');
         } else {
-            this.setTexture('tempArt');
+            this.setTexture(this.icon);
         }
 
         if (this.pickedUp) {

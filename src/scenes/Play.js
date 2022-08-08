@@ -33,14 +33,14 @@ class Play extends Phaser.Scene {
         });
 
         this.testArt1 = new Artifact(this, 270, 900, 'tempArt', "A");
-        this.testArt2 = new Artifact(this, 135, 900, 'tempArt', "B");
+        this.testArt2 = new Artifact(this, 135, 900, 'tempArtB', "B");
         this.testArt3 = new Artifact(this, 405, 900, 'tempArt', "A");
-        this.testArt4 = new Artifact(this, 270, 900 - 100, 'tempArt', "C");
-        this.testArt5 = new Artifact(this, 135, 900 - 100, 'tempArt', "C");
+        this.testArt4 = new Artifact(this, 270, 900 - 100, 'tempArtC', "C");
+        this.testArt5 = new Artifact(this, 135, 900 - 100, 'tempArtC', "C");
         this.testArt6 = new Artifact(this, 405, 900 - 100, 'tempArt', "A");
-        this.testArt7 = new Artifact(this, 270, 900 - 200, 'tempArt', "B");
-        this.testArt8 = new Artifact(this, 135, 900 - 200, 'tempArt', "C");
-        this.testArt9 = new Artifact(this, 405, 900 - 200, 'tempArt', "B");
+        this.testArt7 = new Artifact(this, 270, 900 - 200, 'tempArtB', "B");
+        this.testArt8 = new Artifact(this, 135, 900 - 200, 'tempArtC', "C");
+        this.testArt9 = new Artifact(this, 405, 900 - 200, 'tempArtB', "B");
 
         this.artifactGroup.add(this.testArt1);
         this.artifactGroup.add(this.testArt2);
