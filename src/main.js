@@ -19,7 +19,7 @@ let config = {
 let game = new Phaser.Game(config);
 
 // Keyboard Inputs
-let keyW, keyA, keyS, keyD;
+let keyW, keyA, keyS, keyD, keyQ, keyE;
 
 // Game Pointer
 let gamePointer;

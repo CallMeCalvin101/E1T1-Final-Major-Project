@@ -5,6 +5,7 @@ class Artifact extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         this.pickedUp = false;
+        this.inRange = false;
         this.walkAcceleration = 600;
         this.maxSpeed = 300;
         this.drag = 0.05;
@@ -40,5 +41,19 @@ class Artifact extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    
+    setPickedUp(state) {
+        this.pickedUp = state;
+    }
+
+    getPickedUp() {
+        return this.pickedUp;
+    }
+
+    setInRange(state) {
+        this.inRange = state;
+    }
+
+    getInRange() {
+        return this.inRange;
+    }
 }

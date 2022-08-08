@@ -5,6 +5,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         // Player Parameters
+        this.isHolding = false;
         this.walkAcceleration = 600;
         this.maxSpeed = 300;
         this.drag = 0.05;
@@ -37,5 +38,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setAccelerationX(0);
             this.setDragX(this.drag);
         }
+    }
+
+    setHolding(state) {
+        this.isHolding = state;
+    }
+
+    getHolding() {
+        return this.isHolding;
     }
 }
