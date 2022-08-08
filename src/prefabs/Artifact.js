@@ -1,11 +1,13 @@
 class Artifact extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture='tempArt') {
+    constructor(scene, x, y, texture='tempArt', type) {
         super(scene, x, y, texture, 0);
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        this.type = type;
         this.pickedUp = false;
         this.inRange = false;
+
         this.walkAcceleration = 600;
         this.maxSpeed = 300;
         this.drag = 0.05;
@@ -38,6 +40,8 @@ class Artifact extends Phaser.Physics.Arcade.Sprite {
                 this.setAccelerationX(0);
                 this.setDragX(this.drag);
             }
+        } else {
+            this.setAcceleration(0);
         }
     }
 
@@ -55,5 +59,9 @@ class Artifact extends Phaser.Physics.Arcade.Sprite {
 
     getInRange() {
         return this.inRange;
+    }
+
+    getType() {
+        return this.type;
     }
 }
