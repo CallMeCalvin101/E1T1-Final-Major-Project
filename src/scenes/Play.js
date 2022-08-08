@@ -51,23 +51,29 @@ class Play extends Phaser.Scene {
         this.artifactGroup.add(this.testArt7);
         this.artifactGroup.add(this.testArt8);
         this.artifactGroup.add(this.testArt9);
-
-        this.initArtifacts();
     }
 
     update() {
         this.player.update();
+        this.checkPlayerArtifact()
         this.interactArtifacts();
     }
 
-    initArtifacts() {
+
+    checkPlayerArtifact() {
+        const playerBox = this.player.getBounds();
+        let foundFirst = false;
+        if (this.player.getHolding()) {
+            return;
+        }
         for (let type of this.artifactGroup.getChildren()) {
-            this.physics.add.overlap(this.player, type, () => {
-                for (let extras of this.artifactGroup.getChildren()) {
-                    extras.setInRange(false);
-                }
+            const artBox = type.getBounds();
+            if (Phaser.Geom.Rectangle.Overlaps(playerBox, artBox) && foundFirst == false) {
                 type.setInRange(true);
-            }, null, this);
+                foundFirst = true;
+            } else {
+                type.setInRange(false);
+            }
         }
     }
 
@@ -78,11 +84,9 @@ class Play extends Phaser.Scene {
                 if (type.getInRange() == true) {
                     if (!this.player.getHolding()) {
                         this.player.setHolding(true);
-                        console.log("Q");
                         type.setPickedUp(true);
                     } else {
                         this.player.setHolding(false);
-                        console.log("Q");
                         type.setPickedUp(false);
                         this.checkExhibits()
                     }

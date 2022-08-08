@@ -18,6 +18,12 @@ class Artifact extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+        if (this.inRange) {
+            this.setTexture('tempArtLight');
+        } else {
+            this.setTexture('tempArt');
+        }
+
         if (this.pickedUp) {
             if (keyW.isDown) {
                 this.setAccelerationY(-this.walkAcceleration);
