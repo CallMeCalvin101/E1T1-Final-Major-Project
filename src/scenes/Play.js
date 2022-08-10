@@ -15,14 +15,18 @@ class Play extends Phaser.Scene {
         finalScore = 0;
         this.isInspecting = false;
 
+        this.maxTime = 90000;
+        this.timeLeft = this.maxTime / 100;
+        this.curTime = 0;
+
         this.exhibitGroup = this.add.group({
             runChildUpdate: true
         });
 
-        this.testExh1 = new Exhibit(this, 145, 100, 'tempExh', "A");
-        this.testExh2 = new Exhibit(this, 395, 100, 'tempExh', "B");
-        this.testExh3 = new Exhibit(this, 145, 280, 'tempExh', "C");
-        this.testExh4 = new Exhibit(this, 395, 280, 'tempExh', "D");
+        this.testExh1 = new Exhibit(this, 145, 100, 'JExh', "A");
+        this.testExh2 = new Exhibit(this, 395, 100, 'CExh', "B");
+        this.testExh3 = new Exhibit(this, 145, 280, 'IExh', "C");
+        this.testExh4 = new Exhibit(this, 395, 280, 'KExh', "D");
 
         this.exhibitGroup.add(this.testExh1);
         this.exhibitGroup.add(this.testExh2);
@@ -66,9 +70,19 @@ class Play extends Phaser.Scene {
 
         this.background = this.add.rectangle(game.config.width/2, game.config.height/2, game.config.width, game.config.height, 0x000000, 0.75).setOrigin(0.5).setVisible(false);
         this.enlargedView = this.add.image(game.config.width/2, game.config.height/2, 'JBoxFull').setVisible(false);
+
+        this.timerText = this.add.text(game.config.width/2, game.config.height/2, this.maxTime);
+
+        this.time.delayedCall(this.maxTime, () => {
+            this.scene.start('endScreen');
+        }, null, this);
     }
 
     update() {
+        this.curTime += 1000/60;
+        this.timeLeft = (this.maxTime / 100) - Math.floor(this.curTime / 100);
+        this.timerText.text = this.timeLeft;
+
         if (this.isInspecting == false) {
             this.player.update();
             this.checkPlayerArtifact()
@@ -123,11 +137,13 @@ class Play extends Phaser.Scene {
                     }
                 }
             }
+            this.resetSpeed();
         }
     }
 
     resetSpeed() {
         this.player.setVelocity(0);
+        this.player.setAcceleration(0);
         for (let type of this.artifactGroup.getChildren()) {
             type.setVelocity(0);
         }

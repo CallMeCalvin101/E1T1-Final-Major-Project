@@ -7,9 +7,6 @@ class Title extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.image('player', 'playerSprite.png');
         this.load.image('tempArt', 'tempArtifact.png');
-        this.load.image('tempArtB', 'tempArtifactB.png');
-        this.load.image('tempArtC', 'tempArtifactC.png');
-        this.load.image('tempArtLight', 'tempArtifactSelected.png');
         this.load.image('tempExh', 'tempExhibit.png');
 
         this.load.image('JBoxFull', 'Japanese Box Large.png');
@@ -59,10 +56,14 @@ class Title extends Phaser.Scene {
         this.load.image('KEwerFull', 'korean ewer L.png');
         this.load.image('KEwerIcon', 'korean ewer S.png');
         this.load.image('KEwerIconHL', 'korean ewer S HL.png');
+
+        this.load.image('JExh', 'Exhibit-Jap.png');
+        this.load.image('CExh', 'Exhibit-Chi.png');
+        this.load.image('IExh', 'Exhibit-Ind.png');
+        this.load.image('KExh', 'Exhibit-Kor.png');
     }
 
     create() {
-        console.log("test");
         this.scene.start('playScreen');
         //this.scene.start('endScreen');
     }
