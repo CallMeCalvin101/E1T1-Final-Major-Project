@@ -22,11 +22,12 @@ class Play extends Phaser.Scene {
         this.testExh1 = new Exhibit(this, 145, 100, 'tempExh', "A");
         this.testExh2 = new Exhibit(this, 395, 100, 'tempExh', "B");
         this.testExh3 = new Exhibit(this, 145, 280, 'tempExh', "C");
-        this.testExh3 = new Exhibit(this, 395, 280, 'tempExh', "D");
+        this.testExh4 = new Exhibit(this, 395, 280, 'tempExh', "D");
 
         this.exhibitGroup.add(this.testExh1);
         this.exhibitGroup.add(this.testExh2);
         this.exhibitGroup.add(this.testExh3);
+        this.exhibitGroup.add(this.testExh4);
 
         this.player = new Player(this, 270, 480);
 
@@ -34,25 +35,34 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         });
 
-        this.JArt1 = new Artifact(this, 270, 900, 'JBoxIcon', "A", 'JBoxFull', 'JBoxIconHL');
-        this.testArt2 = new Artifact(this, 135, 900, 'tempArtB', "B");
-        this.testArt3 = new Artifact(this, 405, 900, 'tempArt', "A");
-        this.testArt4 = new Artifact(this, 270, 900 - 100, 'tempArtC', "C");
-        this.testArt5 = new Artifact(this, 135, 900 - 100, 'tempArtC', "C");
-        this.testArt6 = new Artifact(this, 405, 900 - 100, 'tempArt', "A");
-        this.testArt7 = new Artifact(this, 270, 900 - 200, 'tempArtB', "B");
-        this.testArt8 = new Artifact(this, 135, 900 - 200, 'tempArtC', "C");
-        this.testArt9 = new Artifact(this, 405, 900 - 200, 'tempArtB', "B");
+        this.JArt1 = new Artifact(this, 120, 900, 'JBoxIcon', "A", 'JBoxFull', 'JBoxIconHL');
+        this.CArt1 = new Artifact(this, 220, 900, 'CRhinoIcon', "B", 'CRhinoFull', 'CRhinoIconHL');
+        this.JArt2 = new Artifact(this, 320, 900, 'JDishIcon', "A", 'JDishFull', 'JDishIconHL');
+        this.IArt1 = new Artifact(this, 420, 900, 'IElephantIcon', "C", 'IElephantFull', 'IElephantIconHL');
+        
+        this.KArt1 = new Artifact(this, 120, 800, 'KEwerIcon', "D", 'KEwerFull', 'KEwerIconHL');
+        this.KArt2 = new Artifact(this, 220, 800, 'KMoonIcon', "D", 'KMoonFull', 'KMoonIconHL');
+        this.CArt2 = new Artifact(this, 320, 800, 'CJarIcon', "B", 'CJarFull', 'CJarIconHL');
+        this.KArt3 = new Artifact(this, 420, 800, 'KTigerIcon', "D", 'KTigerFull', 'KTigerIconHL');
+
+        this.CArt3 = new Artifact(this, 120, 700, 'CPlateIcon', "B", 'CPlateFull', 'CPlateIconHL');
+        this.IArt2 = new Artifact(this, 220, 700, 'IGaneshaIcon', "C", 'IGaneshaFull', 'IGaneshaIconHL');
+        this.IArt3 = new Artifact(this, 320, 700, 'IBuddhaIcon', "C", 'IBuddhaFull', 'IBuddhaIconHL');
+        this.JArt3 = new Artifact(this, 420, 700, 'JJarIcon', "A", 'JJarFull', 'JJarIconHL');
+
 
         this.artifactGroup.add(this.JArt1);
-        this.artifactGroup.add(this.testArt2);
-        this.artifactGroup.add(this.testArt3);
-        this.artifactGroup.add(this.testArt4);
-        this.artifactGroup.add(this.testArt5);
-        this.artifactGroup.add(this.testArt6);
-        this.artifactGroup.add(this.testArt7);
-        this.artifactGroup.add(this.testArt8);
-        this.artifactGroup.add(this.testArt9);
+        this.artifactGroup.add(this.JArt2);
+        this.artifactGroup.add(this.JArt3);
+        this.artifactGroup.add(this.CArt1);
+        this.artifactGroup.add(this.CArt2);
+        this.artifactGroup.add(this.CArt3);
+        this.artifactGroup.add(this.IArt1);
+        this.artifactGroup.add(this.IArt2);
+        this.artifactGroup.add(this.IArt3);
+        this.artifactGroup.add(this.KArt1);
+        this.artifactGroup.add(this.KArt2);
+        this.artifactGroup.add(this.KArt3);
 
         this.background = this.add.rectangle(game.config.width/2, game.config.height/2, game.config.width, game.config.height, 0x000000, 0.75).setOrigin(0.5).setVisible(false);
         this.enlargedView = this.add.image(game.config.width/2, game.config.height/2, 'JBoxFull').setVisible(false);
@@ -88,7 +98,7 @@ class Play extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyQ)) {
             this.resetSpeed();
             for (let type of this.artifactGroup.getChildren()) {
-                if (type.getInRange() == true) {
+                if (type.getInRange() == true && !this.isInspecting) {
                     if (!this.player.getHolding()) {
                         this.player.setHolding(true);
                         type.setPickedUp(true);
