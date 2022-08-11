@@ -11,22 +11,26 @@ class Play extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         finalScore = 0;
         this.isInspecting = false;
+        this.gameEnd = false;
 
-        this.maxTime = 90000;
-        this.timeLeft = this.maxTime / 100;
+        this.maxTime = 90;
+        this.timeLeft = this.maxTime;
         this.curTime = 0;
+
+        this.bg = this.add.image(game.config.width/2, game.config.height/2, 'PlayBG')
 
         this.exhibitGroup = this.add.group({
             runChildUpdate: true
         });
 
-        this.testExh1 = new Exhibit(this, 145, 100, 'JExh', "A");
-        this.testExh2 = new Exhibit(this, 395, 100, 'CExh', "B");
-        this.testExh3 = new Exhibit(this, 145, 280, 'IExh', "C");
-        this.testExh4 = new Exhibit(this, 395, 280, 'KExh', "D");
+        this.testExh1 = new Exhibit(this, 145, 120, 'JExh', "A");
+        this.testExh2 = new Exhibit(this, 395, 120, 'CExh', "B");
+        this.testExh3 = new Exhibit(this, 145, 300, 'IExh', "C");
+        this.testExh4 = new Exhibit(this, 395, 300, 'KExh', "D");
 
         this.exhibitGroup.add(this.testExh1);
         this.exhibitGroup.add(this.testExh2);
@@ -39,20 +43,20 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         });
 
-        this.JArt1 = new Artifact(this, 120, 900, 'JBoxIcon', "A", 'JBoxFull', 'JBoxIconHL');
-        this.CArt1 = new Artifact(this, 220, 900, 'CRhinoIcon', "B", 'CRhinoFull', 'CRhinoIconHL');
-        this.JArt2 = new Artifact(this, 320, 900, 'JDishIcon', "A", 'JDishFull', 'JDishIconHL');
-        this.IArt1 = new Artifact(this, 420, 900, 'IElephantIcon', "C", 'IElephantFull', 'IElephantIconHL');
+        this.JArt1 = new Artifact(this, 120, 900 - 50, 'JBoxIcon', "A", 'JBoxFull', 'JBoxIconHL');
+        this.CArt1 = new Artifact(this, 220, 900 - 50, 'CRhinoIcon', "B", 'CRhinoFull', 'CRhinoIconHL');
+        this.JArt2 = new Artifact(this, 320, 900 - 50, 'JDishIcon', "A", 'JDishFull', 'JDishIconHL');
+        this.IArt1 = new Artifact(this, 420, 900 - 50, 'IElephantIcon', "C", 'IElephantFull', 'IElephantIconHL');
         
-        this.KArt1 = new Artifact(this, 120, 800, 'KEwerIcon', "D", 'KEwerFull', 'KEwerIconHL');
-        this.KArt2 = new Artifact(this, 220, 800, 'KMoonIcon', "D", 'KMoonFull', 'KMoonIconHL');
-        this.CArt2 = new Artifact(this, 320, 800, 'CJarIcon', "B", 'CJarFull', 'CJarIconHL');
-        this.KArt3 = new Artifact(this, 420, 800, 'KTigerIcon', "D", 'KTigerFull', 'KTigerIconHL');
+        this.KArt1 = new Artifact(this, 120, 800 - 50, 'KEwerIcon', "D", 'KEwerFull', 'KEwerIconHL');
+        this.KArt2 = new Artifact(this, 220, 800 - 50, 'KMoonIcon', "D", 'KMoonFull', 'KMoonIconHL');
+        this.CArt2 = new Artifact(this, 320, 800 - 50, 'CJarIcon', "B", 'CJarFull', 'CJarIconHL');
+        this.KArt3 = new Artifact(this, 420, 800 - 50, 'KTigerIcon', "D", 'KTigerFull', 'KTigerIconHL');
 
-        this.CArt3 = new Artifact(this, 120, 700, 'CPlateIcon', "B", 'CPlateFull', 'CPlateIconHL');
-        this.IArt2 = new Artifact(this, 220, 700, 'IGaneshaIcon', "C", 'IGaneshaFull', 'IGaneshaIconHL');
-        this.IArt3 = new Artifact(this, 320, 700, 'IBuddhaIcon', "C", 'IBuddhaFull', 'IBuddhaIconHL');
-        this.JArt3 = new Artifact(this, 420, 700, 'JJarIcon', "A", 'JJarFull', 'JJarIconHL');
+        this.CArt3 = new Artifact(this, 120, 700 - 50, 'CPlateIcon', "B", 'CPlateFull', 'CPlateIconHL');
+        this.IArt2 = new Artifact(this, 220, 700 - 50, 'IGaneshaIcon', "C", 'IGaneshaFull', 'IGaneshaIconHL');
+        this.IArt3 = new Artifact(this, 320, 700 - 50, 'IBuddhaIcon', "C", 'IBuddhaFull', 'IBuddhaIconHL');
+        this.JArt3 = new Artifact(this, 420, 700 - 50, 'JJarIcon', "A", 'JJarFull', 'JJarIconHL');
 
 
         this.artifactGroup.add(this.JArt1);
@@ -69,25 +73,45 @@ class Play extends Phaser.Scene {
         this.artifactGroup.add(this.KArt3);
 
         this.background = this.add.rectangle(game.config.width/2, game.config.height/2, game.config.width, game.config.height, 0x000000, 0.75).setOrigin(0.5).setVisible(false);
+        this.endBG = this.add.rectangle(game.config.width/2, game.config.height/2, game.config.width, 200, 0x000000).setVisible(false);
         this.enlargedView = this.add.image(game.config.width/2, game.config.height/2, 'JBoxFull').setVisible(false);
 
-        this.timerText = this.add.text(game.config.width/2, game.config.height/2, this.maxTime);
+        let timerConfig = {
+            fontFamily: 'fantasy',
+            fontSize: '28px',
+            //backgroundColor: '#0000',
+            color: '#ffffff',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        }
 
-        this.time.delayedCall(this.maxTime, () => {
-            this.scene.start('endScreen');
-        }, null, this);
+        this.border = this.add.image(game.config.width/2, game.config.height/2, 'border');
+        this.timerText = this.add.text(game.config.width/2 - 55, 10, this.maxTime, timerConfig);
+        this.timerText.setText("Time: " + Math.floor(this.timeLeft / 60) + ":" + this.timeLeft % 60);
+
+        this.gameTimer = this.time.addEvent({
+            delay: 1000,
+            callback: this.decreaseTimer,
+            callbackScope: this,
+            loop: true
+        });
     }
 
     update() {
-        this.curTime += 1000/60;
-        this.timeLeft = (this.maxTime / 100) - Math.floor(this.curTime / 100);
-        this.timerText.text = this.timeLeft;
-
-        if (this.isInspecting == false) {
-            this.player.update();
-            this.checkPlayerArtifact()
+        if (!this.gameEnd) {
+            if (this.isInspecting == false) {
+                this.player.update();
+                this.checkPlayerArtifact()
+            }
+            this.interactArtifacts();
+        } else {
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.scene.start('titleScreen');
+            }
         }
-        this.interactArtifacts();
     }
 
 
@@ -174,5 +198,50 @@ class Play extends Phaser.Scene {
         this.background.setVisible(false);
         this.enlargedView.setVisible(false);
         this.isInspecting = false;
+    }
+
+    decreaseTimer() {
+        this.timeLeft -= 1;
+        if (this.timeLeft < 0) {
+            this.endGame();
+        }
+
+        if (!this.gameEnd) {
+            if (this.timeLeft % 60 < 10) {
+                this.timerText.setText("Time: " + Math.floor(this.timeLeft / 60) + ":0" + this.timeLeft % 60);
+            } else {
+                this.timerText.setText("Time: " + Math.floor(this.timeLeft / 60) + ":" + this.timeLeft % 60);
+            }
+        }
+    }
+
+    endGame() {
+        this.gameEnd = true;
+        this.stopInspect();
+        this.resetSpeed();
+        for (let type of this.artifactGroup.getChildren()) {
+            if (type.getPickedUp() == true) {
+                type.setPickedUp(false);
+            }
+        }
+
+        this.endBG.setVisible(true);
+        this.background.setVisible(true);
+
+        let endConfig = {
+            fontFamily: 'Roboto',
+            fontSize: '36px',
+            //backgroundColor: '#0000',
+            color: '#ffffff',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        }
+
+        this.add.text(game.config.width/2, game.config.height/2 - 40, "GAME OVER", endConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2, "Correct Exhibits: " + finalScore, endConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + 40, "Press R to Reset", endConfig).setOrigin(0.5);
     }
 }

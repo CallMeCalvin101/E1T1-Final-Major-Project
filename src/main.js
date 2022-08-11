@@ -13,14 +13,11 @@ let config = {
             }
         }
     },
-    scene: [Title, Instruction, Play, End]
+    scene: [Title, Play]
 };
 
 let game = new Phaser.Game(config);
 
 // Keyboard Inputs
-let keyW, keyA, keyS, keyD, keyQ, keyE;
+let keyW, keyA, keyS, keyD, keyQ, keyE, keyR;
 let finalScore;
-
-// Game Pointer
-let gamePointer;
